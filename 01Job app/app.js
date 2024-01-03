@@ -4,7 +4,7 @@ const app = express();
 app.get('/',(req,res)=>{
     res.send("home page")
 })
-const port = 8080;
+const port = process.env.PORT || 8080;
 const start=async()=>{
     try {
         
