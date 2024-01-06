@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const connectDB = async (url) => {
+const connectDB = async () => {
   try {
-    await mongoose.connect(url, {
+    await mongoose.connect('mongodb://atlas-sql-647820beabf8cc5c13133383-x7ftt.a.query.mongodb.net/job?ssl=true&authSource=admin', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
+      // useCreateIndex: true,
     });
     console.log('Connected to the database');
   } catch (error) {
