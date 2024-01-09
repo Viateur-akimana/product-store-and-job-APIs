@@ -1,11 +1,22 @@
-const getAllJobs = (req,res)=>{
-    res.send("Get all jobs")
+const NotFoundError = require('../errors/not-found');
+const Job = require('../models/job')
+
+const getAllJobs = async(req,res)=>{
+    const jobs = await Job.find({createdBy:req.user.userId}).sort('createdAt');
+    res.status(200).json({jobs:jobs,count:jobs.length()})
 }
-const getJob = (req,res) =>{
-    res.send("get a job")
+const getJob = async(req,res) =>{
+    const {user:userId,params:{id:jobId}} = req
+    const job = await Job.findOne({jobId:_id,createdBy:userId});
+    if(!job){
+        throw new NotFoundError(`No job with  id ${jobId}`)
+    }
+    res.status(200).json({job})
 }
-const createJob = (req,res) =>{
-    res.send("creating a job in the database")
+const createJob = async(req,res) =>{
+    req.body.createdBy=req.user.userId;
+    const job = await Job.create(req.body);
+    res.status(201).json({job});
 }
 
 const updateJob =(req,res) =>{

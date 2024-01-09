@@ -1,3 +1,9 @@
-const notFound = (req, res) => res.status(404).send('Route does not exist')
-
-module.exports = notFound
+const {StatusCodes} = require('http-status-codes')
+const {CustomAPIError} = require("./customAPIError")
+class NotFoundError extends CustomAPIError{
+constructor(message){
+    super(message)
+    this.statusCode = StatusCodes.NOT_FOUND
+}
+}
+module.exports=NotFoundError;
